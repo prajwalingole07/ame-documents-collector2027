@@ -16,8 +16,8 @@ A complete, responsive web application for managing student document collection,
 
 ## 🔐 Default Admin Credentials
 
-- **Admin ID:** `ame2027`
-- **Password:** `ame@2027`
+- **Admin ID:** `------'
+- **Password:** `------'
 *(You can change the admin password at any time under **Admin Settings** in the dashboard).*
 
 ---
