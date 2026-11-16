@@ -1,0 +1,743 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   AURORA GLASS — 2027 Design System
+   A luminous, frosted-glass interface built on a living aurora backdrop.
+   ========================================================================== */
+
+:root {
+  --ink: #141a3a;
+  --muted: #5c6584;
+  --indigo: #4f46e5;
+  --violet: #7c3aed;
+  --cyan: #0891b2;
+  --pink: #db2777;
+  --glass: rgba(255, 255, 255, 0.56);
+  --glass-strong: rgba(255, 255, 255, 0.74);
+  --glass-border: rgba(255, 255, 255, 0.82);
+  --glass-shadow: 0 26px 70px -30px rgba(30, 27, 75, 0.45),
+    0 10px 28px -18px rgba(79, 70, 229, 0.28);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    min-height: 100%;
+    background-color: #eef1fb;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    margin: 0;
+    color: var(--ink);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Helvetica, Arial, sans-serif;
+    font-feature-settings: 'ss01' on, 'cv11' on;
+    background-color: #e8ecff;
+    background-image: radial-gradient(1400px 1000px at 6% -10%, rgba(129, 140, 248, 0.9) 0%, transparent 60%),
+      radial-gradient(1200px 900px at 100% 0%, rgba(34, 211, 238, 0.62) 0%, transparent 58%),
+      radial-gradient(1200px 900px at 96% 100%, rgba(244, 114, 182, 0.72) 0%, transparent 60%),
+      radial-gradient(1000px 800px at 0% 100%, rgba(45, 212, 191, 0.62) 0%, transparent 60%),
+      linear-gradient(135deg, #eef1ff 0%, #e7ebff 40%, #fbeff7 100%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Outfit', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: rgba(99, 102, 241, 0.28);
+    color: #1e1b4b;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.28);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.45);
+    background-clip: content-box;
+  }
+}
+
+#root {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+}
+
+/* --------------------------------------------------------------------------
+   The living aurora backdrop
+   -------------------------------------------------------------------------- */
+
+.aurora-stage {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aurora-stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+}
+
+.aurora-grid {
+  position: absolute;
+  inset: -2px;
+  opacity: 0.45;
+  background-image: linear-gradient(rgba(99, 102, 241, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.055) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at 50% 40%, black 10%, transparent 72%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, black 10%, transparent 72%);
+}
+
+.orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(70px);
+  opacity: 0.7;
+  will-change: transform;
+}
+
+.orb-indigo {
+  width: 46vw;
+  height: 46vw;
+  min-width: 420px;
+  min-height: 420px;
+  top: -14%;
+  left: -8%;
+  background: radial-gradient(circle at 35% 35%, rgba(129, 140, 248, 0.85), rgba(79, 70, 229, 0.2) 65%, transparent 72%);
+  animation: orb-drift-a 22s ease-in-out infinite alternate;
+}
+
+.orb-cyan {
+  width: 40vw;
+  height: 40vw;
+  min-width: 380px;
+  min-height: 380px;
+  top: 8%;
+  right: -10%;
+  background: radial-gradient(circle at 50% 50%, rgba(103, 232, 249, 0.8), rgba(6, 182, 212, 0.16) 68%, transparent 74%);
+  animation: orb-drift-b 26s ease-in-out infinite alternate;
+}
+
+.orb-pink {
+  width: 44vw;
+  height: 44vw;
+  min-width: 400px;
+  min-height: 400px;
+  bottom: -18%;
+  right: 4%;
+  background: radial-gradient(circle at 50% 50%, rgba(249, 168, 212, 0.75), rgba(219, 39, 119, 0.14) 68%, transparent 74%);
+  animation: orb-drift-c 30s ease-in-out infinite alternate;
+}
+
+.orb-mint {
+  width: 34vw;
+  height: 34vw;
+  min-width: 320px;
+  min-height: 320px;
+  bottom: -8%;
+  left: -6%;
+  background: radial-gradient(circle at 50% 50%, rgba(110, 231, 183, 0.7), rgba(16, 185, 129, 0.12) 68%, transparent 74%);
+  animation: orb-drift-d 24s ease-in-out infinite alternate;
+}
+
+@keyframes orb-drift-a {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(7%, 9%, 0) scale(1.12); }
+}
+@keyframes orb-drift-b {
+  0% { transform: translate3d(0, 0, 0) scale(1.05); }
+  100% { transform: translate3d(-8%, 6%, 0) scale(0.94); }
+}
+@keyframes orb-drift-c {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-6%, -8%, 0) scale(1.1); }
+}
+@keyframes orb-drift-d {
+  0% { transform: translate3d(0, 0, 0) scale(0.96); }
+  100% { transform: translate3d(5%, -6%, 0) scale(1.08); }
+}
+
+/* --------------------------------------------------------------------------
+   Glass surfaces
+   -------------------------------------------------------------------------- */
+
+.glass-panel {
+  position: relative;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.58) 0%, rgba(255, 255, 255, 0.22) 100%);
+  -webkit-backdrop-filter: blur(34px) saturate(185%);
+  backdrop-filter: blur(34px) saturate(185%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    0 34px 80px -34px rgba(30, 27, 75, 0.58),
+    0 10px 30px -14px rgba(79, 70, 229, 0.26);
+}
+
+.glass-card {
+  position: relative;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0.2) 100%);
+  -webkit-backdrop-filter: blur(26px) saturate(170%);
+  backdrop-filter: blur(26px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    0 22px 52px -28px rgba(30, 27, 75, 0.46),
+    0 6px 18px -12px rgba(79, 70, 229, 0.18);
+}
+
+.glass-soft {
+  background: rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.glass-card-hover {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease,
+    border-color 0.4s ease;
+}
+.glass-card-hover:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.98);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 34px 80px -32px rgba(79, 70, 229, 0.5);
+}
+
+.glass-header {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.68) 0%, rgba(255, 255, 255, 0.38) 100%);
+  -webkit-backdrop-filter: blur(30px) saturate(185%);
+  backdrop-filter: blur(30px) saturate(185%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 14px 40px -28px rgba(30, 27, 75, 0.5);
+}
+
+.glass-sidebar {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.56) 0%, rgba(255, 255, 255, 0.24) 100%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  backdrop-filter: blur(32px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 30px 70px -34px rgba(30, 27, 75, 0.48);
+}
+
+.glass-modal {
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 255, 0.78) 100%);
+  -webkit-backdrop-filter: blur(38px) saturate(185%);
+  backdrop-filter: blur(38px) saturate(185%);
+  border: 1px solid rgba(255, 255, 255, 0.86);
+  box-shadow: inset 0 1px 0 #fff, 0 50px 120px -40px rgba(30, 27, 75, 0.7);
+}
+
+.glass-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.16), transparent);
+}
+
+/* Iridescent top edge used on feature cards */
+.glass-sheen::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1.5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent 4%, rgba(99, 102, 241, 0.55), rgba(6, 182, 212, 0.55), rgba(236, 72, 153, 0.45), transparent 96%);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Typography accents
+   -------------------------------------------------------------------------- */
+
+.aurora-text {
+  background: linear-gradient(110deg, #3730a3 0%, #6d28d9 34%, #0891b2 68%, #db2777 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.aurora-text-light {
+  background: linear-gradient(105deg, #ffffff 0%, #e0e7ff 42%, #a5f3fc 75%, #fbcfe8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-ink {
+  color: var(--ink);
+}
+.text-muted {
+  color: var(--muted);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.34rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #4338ca;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 #fff, 0 8px 18px -12px rgba(79, 70, 229, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 1rem;
+  padding: 0.9rem 1.35rem;
+  font-size: 0.83rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #fff;
+  background-image: linear-gradient(120deg, #4f46e5 0%, #6d28d9 46%, #0891b2 100%);
+  background-size: 160% 160%;
+  background-position: 0% 50%;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow: 0 18px 34px -16px rgba(79, 70, 229, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-position 0.5s ease;
+}
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background-position: 100% 50%;
+  box-shadow: 0 24px 44px -18px rgba(79, 70, 229, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+.btn-primary:active:not(:disabled) {
+  transform: translateY(1px) scale(0.99);
+}
+.btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-soft {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.95rem;
+  padding: 0.62rem 0.95rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #3730a3;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: inset 0 1px 0 #fff, 0 10px 24px -18px rgba(30, 27, 75, 0.5);
+  transition: all 0.22s ease;
+}
+.btn-soft:hover {
+  background: rgba(255, 255, 255, 0.85);
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   Inputs — global glass treatment (keeps validation colours intact)
+   -------------------------------------------------------------------------- */
+
+main input:not([type='checkbox']):not([type='radio']):not([type='file']),
+main select,
+main textarea,
+.glass-modal input:not([type='checkbox']):not([type='radio']):not([type='file']),
+.glass-modal select,
+.glass-modal textarea,
+.glass-panel input:not([type='checkbox']):not([type='radio']):not([type='file']),
+.glass-panel select,
+.glass-panel textarea {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.9) !important;
+  color: #1e1b4b !important;
+  box-shadow: inset 0 1px 2px rgba(30, 27, 75, 0.04), 0 1px 0 rgba(255, 255, 255, 0.65);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+main input::placeholder,
+main textarea::placeholder,
+.glass-modal input::placeholder,
+.glass-panel input::placeholder {
+  color: #9aa3bd !important;
+}
+main input:not([type='checkbox']):not([type='radio']):not([type='file']):focus,
+main select:focus,
+main textarea:focus,
+.glass-modal input:not([type='checkbox']):not([type='radio']):not([type='file']):focus,
+.glass-modal select:focus,
+.glass-modal textarea:focus,
+.glass-panel input:not([type='checkbox']):not([type='radio']):not([type='file']):focus,
+.glass-panel select:focus,
+.glass-panel textarea:focus {
+  outline: none !important;
+  border-color: rgba(129, 140, 248, 0.8) !important;
+  background: rgba(255, 255, 255, 0.78) !important;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.14), inset 0 1px 2px rgba(30, 27, 75, 0.04) !important;
+}
+
+main input[type='checkbox'],
+main input[type='radio'] {
+  accent-color: #6366f1;
+}
+
+/* --------------------------------------------------------------------------
+   Legacy surface upgrades — makes every existing screen glass without
+   touching complex business components.
+   -------------------------------------------------------------------------- */
+
+main .bg-white,
+main .bg-white\/90,
+main .bg-white\/80,
+main .bg-white\/70,
+main .bg-gray-50,
+main .bg-slate-50 {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  backdrop-filter: blur(22px) saturate(160%);
+  border-color: rgba(255, 255, 255, 0.66) !important;
+}
+
+main .shadow-sm,
+main .shadow-md {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 16px 40px -28px rgba(30, 27, 75, 0.35) !important;
+}
+
+main .divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+main .divide-gray-100 > :not([hidden]) ~ :not([hidden]),
+main .divide-slate-200 > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgba(99, 102, 241, 0.1) !important;
+}
+
+main table thead,
+main .bg-slate-100 {
+  background-color: rgba(255, 255, 255, 0.38) !important;
+}
+
+main table thead th {
+  color: #525a78 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.055em;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}
+
+main tbody tr {
+  transition: background 0.2s ease;
+}
+main tbody tr:hover {
+  background: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* Primary controls in legacy components */
+main button.bg-blue-600,
+main button[class*='bg-blue-600'],
+main a[class*='bg-blue-600'] {
+  background-image: linear-gradient(120deg, #4f46e5 0%, #6d28d9 50%, #0891b2 100%) !important;
+  background-color: transparent !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 14px 30px -16px rgba(79, 70, 229, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.24) !important;
+}
+main button[class*='bg-blue-600']:hover,
+main a[class*='bg-blue-600']:hover {
+  filter: saturate(1.12) brightness(1.05);
+}
+
+main button[class*='bg-slate-900'],
+main button[class*='bg-gray-900'] {
+  background-image: linear-gradient(120deg, #111633 0%, #312e81 55%, #0e7490 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 16px 32px -18px rgba(17, 22, 51, 0.85) !important;
+}
+
+main button[class*='bg-emerald-600'],
+main button[class*='bg-green-600'] {
+  background-image: linear-gradient(120deg, #059669 0%, #0d9488 100%) !important;
+  box-shadow: 0 14px 28px -16px rgba(5, 150, 105, 0.75) !important;
+}
+
+main button[class*='bg-red-600'],
+main button[class*='bg-rose-600'] {
+  background-image: linear-gradient(120deg, #e11d48 0%, #be123c 100%) !important;
+  box-shadow: 0 14px 28px -16px rgba(225, 29, 72, 0.7) !important;
+}
+
+/* Soften coloured status panels so they still read as glass */
+main .bg-emerald-50,
+main .bg-green-50 {
+  background-color: rgba(236, 253, 245, 0.72) !important;
+}
+main .bg-amber-50,
+main .bg-yellow-50 {
+  background-color: rgba(255, 251, 235, 0.72) !important;
+}
+main .bg-rose-50,
+main .bg-red-50 {
+  background-color: rgba(255, 241, 242, 0.72) !important;
+}
+main .bg-blue-50,
+main .bg-indigo-50 {
+  background-color: rgba(238, 242, 255, 0.72) !important;
+}
+main .bg-purple-50 {
+  background-color: rgba(250, 245, 255, 0.72) !important;
+}
+
+/* Cards that use a dark/coloured banner keep their drama but gain polish */
+main .bg-gradient-to-r.from-blue-900,
+main .bg-gradient-to-br.from-blue-900 {
+  box-shadow: 0 30px 70px -30px rgba(30, 27, 75, 0.7);
+}
+
+/* --------------------------------------------------------------------------
+   Sidebar navigation
+   -------------------------------------------------------------------------- */
+
+.nav-pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.9rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #5a6382;
+  border: 1px solid transparent;
+  transition: all 0.22s ease;
+}
+.nav-pill:hover {
+  color: #312e81;
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+.nav-pill-active {
+  color: #fff;
+  background-image: linear-gradient(115deg, #4f46e5 0%, #6d28d9 52%, #0e7490 100%);
+  border-color: rgba(255, 255, 255, 0.26);
+  box-shadow: 0 16px 30px -14px rgba(79, 70, 229, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.26);
+}
+.nav-pill-active:hover {
+  color: #fff;
+  background-image: linear-gradient(115deg, #4338ca 0%, #5b21b6 52%, #155e75 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Floating / entrance animations
+   -------------------------------------------------------------------------- */
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float {
+  animation: float-soft 6s ease-in-out infinite;
+}
+.animate-float-slow {
+  animation: float-soft 9s ease-in-out infinite;
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-rise {
+  animation: rise-in 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.delay-1 { animation-delay: 0.08s; }
+.delay-2 { animation-delay: 0.16s; }
+.delay-3 { animation-delay: 0.24s; }
+.delay-4 { animation-delay: 0.32s; }
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55); }
+  50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+}
+.live-dot {
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55);
+  animation: pulse-dot 2.2s ease-out infinite;
+}
+
+/* Old sunlight glow is re-interpreted as a soft aurora bloom */
+.sunlight-glow {
+  position: fixed;
+  top: -180px;
+  left: -160px;
+  width: 620px;
+  height: 620px;
+  background: radial-gradient(circle at 45% 45%, rgba(129, 140, 248, 0.4) 0%, rgba(103, 232, 249, 0.2) 42%, rgba(251, 207, 232, 0.12) 60%, transparent 72%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(50px);
+}
+
+/* --------------------------------------------------------------------------
+   Reusable bits
+   -------------------------------------------------------------------------- */
+
+.status-dot {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.ring-gradient {
+  padding: 3px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #6366f1, #22d3ee 48%, #f472b6);
+  box-shadow: 0 8px 20px -8px rgba(79, 70, 229, 0.55);
+}
+
+.tab-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.95rem;
+  border-radius: 0.9rem;
+  font-size: 0.73rem;
+  font-weight: 700;
+  color: #565f7e;
+  border: 1px solid transparent;
+  transition: all 0.22s ease;
+  white-space: nowrap;
+}
+.tab-pill:hover {
+  color: #312e81;
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(255, 255, 255, 0.75);
+}
+.tab-pill-active {
+  color: #fff;
+  background-image: linear-gradient(115deg, #4f46e5 0%, #6d28d9 55%, #0e7490 100%);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 12px 26px -14px rgba(79, 70, 229, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+.tab-pill-active:hover {
+  color: #fff;
+  background-image: linear-gradient(115deg, #4338ca 0%, #5b21b6 55%, #155e75 100%);
+}
+
+/* Tables inside old components sit on glass; give headers a clear tint */
+main table {
+  border-color: rgba(99, 102, 241, 0.12) !important;
+}
+
+/* Recharts polish */
+.recharts-default-tooltip {
+  border-radius: 14px !important;
+  border: 1px solid rgba(255, 255, 255, 0.85) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  box-shadow: 0 18px 40px -20px rgba(30, 27, 75, 0.4) !important;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  font-size: 12px;
+}
+
+/* File inputs */
+input[type='file'] {
+  color: #4c5672;
+}
+input[type='file']::file-selector-button {
+  margin-right: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 0.7rem;
+  padding: 0.45rem 0.8rem;
+  background: linear-gradient(120deg, #eef2ff, #ecfeff);
+  color: #3730a3;
+  font-weight: 700;
+  font-size: 0.72rem;
+  cursor: pointer;
+  box-shadow: 0 6px 14px -10px rgba(30, 27, 75, 0.5);
+}
+
+/* Keyboard focus visibility */
+:focus-visible {
+  outline: 2px solid rgba(99, 102, 241, 0.65);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile app polish
+   -------------------------------------------------------------------------- */
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.safe-bottom {
+  bottom: calc(0.75rem + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 1023px) {
+  /* 16px prevents iOS Safari / iPad from auto-zooming when an input is focused. */
+  input:not([type='checkbox']):not([type='radio']):not([type='file']),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Keep dense admin tables comfortable to read while they scroll. */
+  main table {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
