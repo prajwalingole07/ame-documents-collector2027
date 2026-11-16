@@ -18,8 +18,8 @@ A complete, responsive web application for student document collection, category
 
 ## 🔐 Default Admin Credentials
 
-- **Admin ID:** `ame2027`
-- **Password:** `ame@2027`
+- **Admin ID:** ``
+- **Password:** ``
 
 Change the admin password immediately after your first login under **Admin Settings → Update Admin Password**. The password is stored as a SHA-256 hash in `admin_config/credentials` in Firestore.
 
@@ -111,7 +111,7 @@ No environment variables are required; the Firebase web config is already in `sr
 
 ## ✅ Post-Deployment Test Checklist
 
-1. Open the site on a PC, log in as admin (`ame2027` / `ame@2027`).
+1. Open the site on a PC, log in as admin (`` / ``).
 2. Import an Excel sheet or add one student.
 3. On a phone, log in with that student's registration number and mobile number.
 4. Upload a document. The admin dashboard should show it **without refreshing**.
